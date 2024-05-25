@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino Bluetooth</title>
+    <link rel="stylesheet" href="arduinobluetooth.css">
+</head>
+<body>
+    <header>
+
+        <h1 id="heading">Arduino Bluetooth Display</h1>
+    </header>
+    <hr>
+    <main>
+        <h3 class="title">Introduction</h3>
+        <p>
+            Welcome to the project website. This project is about, building an Arduino and bluetooth based text display.
+            Here you can print text of any length on 16x2 LCD Display, by just sending the text via Bluetooth.
+            This project can be used as a simple Notice Board at homes, offices and public places.
+            You just need the following things to make this project.
+            So, Lets get  started.
+            <h3 class="title">Components Needed</h3>
+            <ul>
+                <li>Arduino UNO</li>
+                <li>16x2 LCD Display</li>
+                <li>HC-05 Bluetooth Module</li>
+                <li>Connecting Wires</li>
+                <li>USB Cable</li>
+                <li>A Mobile phone or PC</li>
+            </ul>
+            <ul>
+            <li>You need the <a href="https://play.google.com/store/apps/details?id=name.antonsmirnov.android.arduinodroid2"> Arduino Droid</a> App if you have Mobile phone.</li>
+            <li>If you have a PC, you need <a href="https://www.arduino.cc">Arduino IDE</a> to upload the code.</li>
+            <li>Also, you have to install a <a href="https://play.google.com/store/apps/details?id=com.broxcode.arduinobluetoothfree">Bluetooh Control App</a> to connect and send text to Arduino via Bluetooth.</li>
+            </ul>
+        </p>
+        <h3 class="title">Circuit or Block Diagram</h3>
+        <img src="circuit.png" alt="Arduino Bluetooh Control Circuit" width="300" id="circuit">
+        
+        <h3 class="title">Some Pictures</h3>
+        <img class="image" src="projectimage1.jpg" alt="project image 1" width="300">
+        <img class="image" src="projectimage2.jpg" alt="project image 2" width="300">
+
+
+
+
+        <h3 class="title">Tutorial Video</h3>
+        <video src="https://youtube.com/" width="400"></video>
+
+        <h3 class="title">Code</h3>
+
+        <p id="code">#include < LiquidCrystal.h ><br><br>// LCD pins<br>#define LCD_RS 7<br>#define LCD_EN 6<br>#define LCD_D4 5<br>#define LCD_D5 4<br>#define LCD_D6 9<br>#define LCD_D7 8<br><br>LiquidCrystal lcd(LCD_RS, LCD_EN, LCD_D4, LCD_D5, LCD_D6, LCD_D7);<br><br>void setup() {<br>  // Set up LCD<br>  lcd.begin(16, 2);<br><br>  // Set up serial communication (Bluetooth HC-05 is connected to default serial pins)<br>  Serial.begin(9600);<br>}<br><br>void loop() {<br>  if (Serial.available()) {<br>    // Read input from serial (Bluetooth)<br>    String input = Serial.readStringUntil('<br>');<br>    // Display the input message on the LCD<br>    displayMessage(input);<br>  }<br>}<br><br>void displayMessage(String message) {<br>  lcd.clear();<br><br>  // Check if the message length exceeds the display width<br>  if (message.length() <= 16) {<br>    // Message fits on one line<br>    lcd.setCursor(0, 0);<br>    lcd.print(message);<br>  } else {<br>    // Message is longer than one line<br>    String firstLine = message.substring(0, 16);<br>    String secondLine = message.substring(16);<br><br>    lcd.setCursor(0, 0);<br>    lcd.print(firstLine);<br><br>    // If second line is longer than the LCD width, scroll it<br>    if (secondLine.length() > 16) {<br>      for (int i = 0; i <= secondLine.length() - 16; i++) {<br>        lcd.setCursor(0, 1);<br>        lcd.print(secondLine.substring(i, i + 16));<br>        delay(500); // Adjust scroll speed as needed<br>        lcd.clear(); // Clear screen before the next scroll<br>        lcd.setCursor(0, 0);<br>        lcd.print(firstLine); // Ensure the first line remains static<br>      }<br>      lcd.setCursor(0, 1);<br>      lcd.print(secondLine.substring(secondLine.length() - 16)); // Print the last part of the second line<br>    } else {<br>      lcd.setCursor(0, 1);<br>      lcd.print(secondLine);<br>    }<br>  }<br>}<br> </p>
+        <a href="arduinocode.ino">Get File Here</a>
+    
+    </main>
+    <hr>
+    <footer>
+        <h4 id="thankyou" style="margin-left:3px">Thank you very much!</h4>
+        <h4 style="margin-left:3px">Author : Mustafa</h4>
+        <a style="margin-left:5px" href="https://youtube.com/@ElectroBytes007"> &copy;ElectroBytes</a>
+    </footer>
+
+</body>
+</html>
