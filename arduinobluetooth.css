@@ -2,9 +2,7 @@ header
 {
     background-color: rgb(73, 106, 255);
     text-align: center;
-    margin-top: 20px;
-    border-radius: 15px;
-    height:40px;
+    border-radius: 15px
 }
 main
 {
